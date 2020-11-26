@@ -71,6 +71,7 @@ public class App {
     public boolean end() {
         if (process.isAlive()) {
             process.destroy();
+            process.children().forEach(a -> a.destroy());
         } else {
             return true;
         }
