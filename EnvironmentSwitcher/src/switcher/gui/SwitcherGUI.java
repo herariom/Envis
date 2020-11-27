@@ -109,7 +109,7 @@ public class SwitcherGUI {
         frmEnvironmentSwitcher.getContentPane().add(lblName);
 
         fieldFilePath = new JTextField();
-        fieldFilePath.setBounds(442, 28, 96, 19);
+        fieldFilePath.setBounds(442, 52, 96, 19);
         frmEnvironmentSwitcher.getContentPane().add(fieldFilePath);
         fieldFilePath.setColumns(10);
 
@@ -119,7 +119,7 @@ public class SwitcherGUI {
         frmEnvironmentSwitcher.getContentPane().add(lblFilepath);
 
         fieldName = new JTextField();
-        fieldName.setBounds(442, 52, 96, 19);
+        fieldName.setBounds(442, 28, 96, 19);
         frmEnvironmentSwitcher.getContentPane().add(fieldName);
         fieldName.setColumns(10);
 
