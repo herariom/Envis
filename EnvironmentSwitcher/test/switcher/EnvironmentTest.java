@@ -104,4 +104,10 @@ public class EnvironmentTest {
         
     }
 
+    @Test
+    public void testToString() {
+        Environment env = new Environment(ENV_NAME);
+        
+        assertEquals(ENV_NAME, env.toString());
+    }
 }

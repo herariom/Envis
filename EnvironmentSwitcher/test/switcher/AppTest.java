@@ -115,6 +115,13 @@ public class AppTest {
         assertEquals(arguments, a.getArguments());
     }
 
+    @Test
+    public void testToString() {
+        App a = new App(FILE_PATH, NAME);
+        
+        assertEquals(NAME + " - " + FILE_PATH, a.toString());
+    }
+    
 //    @Test
 //    public void testGetProcess() {
 //        fail("Not yet implemented");

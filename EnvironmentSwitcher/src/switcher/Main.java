@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
+        EnvironmentManager envMgr = EnvironmentManager.getInstance();
+        
         App a = new App("C:\\Program Files\\HeidiSQL\\heidisql.exe", "HeidiSQL");
         App a2 = new App("C:\\Program Files\\Git\\git-bash.exe", "Git-Bash");
         
@@ -13,12 +15,12 @@ public class Main {
         apps.add(a);
         apps.add(a2);
         
-        Environment env = new Environment("Dev", apps);
-
-        env.startApps();
+        envMgr.addEnvironment("Dev", apps);
+        
+        envMgr.getEnvironment("Dev").startApps();
         
         Thread.sleep(4500);
         
-        System.out.println(env.closeApps().size());
+        System.out.println(envMgr.getEnvironment("Dev").closeApps().size());
     }
 }

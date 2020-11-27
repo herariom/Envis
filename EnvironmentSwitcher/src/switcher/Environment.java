@@ -59,8 +59,12 @@ public class Environment {
         return apps;
     }
 
-
     public void setApps(ArrayList<App> apps) {
         this.apps = apps;
+    }
+    
+    @Override
+    public String toString() {
+        return name;
     }
 }

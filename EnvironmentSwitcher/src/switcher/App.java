@@ -78,4 +78,9 @@ public class App {
         
         return !process.isAlive();
     }
+    
+    @Override
+    public String toString() {
+        return name + " - " + filePath;
+    }
 }
