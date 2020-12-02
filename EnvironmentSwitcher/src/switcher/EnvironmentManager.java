@@ -37,4 +37,8 @@ public class EnvironmentManager {
         environments.put(name, new Environment(name, apps));
     }
     
+    public Environment removeEnvironment(String name) {
+        return environments.remove(name);
+    }
+    
 }

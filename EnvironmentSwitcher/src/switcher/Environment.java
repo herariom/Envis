@@ -55,6 +55,10 @@ public class Environment {
         return apps.add(app);
     }
 
+    public boolean removeApp(App app) {
+        return apps.remove(app);
+    } 
+    
     public ArrayList<App> getApps() {
         return apps;
     }

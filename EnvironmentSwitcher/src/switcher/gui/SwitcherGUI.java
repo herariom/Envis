@@ -179,14 +179,25 @@ public class SwitcherGUI {
                 
                 environments.clear();
                 environments.addAll(envMgr.getEnvironments().values());
-                
-                System.out.println(envMgr.getEnvironments().values().size());
             }
         });
         
         btnRemoveEnv.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                
+                try {
+                    Environment env = environments.get(envList.getSelectedIndex());
+                    
+                    if (env != null) {
+                        envMgr.removeEnvironment(env.getName());
+                    }
+                    
+                    environments.clear();
+                    environments.addAll(envMgr.getEnvironments().values());
+                } catch (ArrayIndexOutOfBoundsException exception) {
+                    // User hasn't selected an environment
+                    
+                    exception.printStackTrace();
+                }
             }
         });
         
@@ -231,6 +242,24 @@ public class SwitcherGUI {
 
         btnRemoveApp.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                try {
+                    Environment env = environments.get(envList.getSelectedIndex());
+                    
+                    if (env != null) {
+                        App toRemove = apps.get(appList.getSelectedIndex());
+                        
+                        if (toRemove != null) {
+                            env.removeApp(toRemove);
+                            
+                            apps.clear();
+                            apps.addAll(env.getApps());
+                        }
+                    }
+                } catch (ArrayIndexOutOfBoundsException exception) {
+                    // User hasn't selected an app
+                    
+                    exception.printStackTrace();
+                }
             }
         });
     }
