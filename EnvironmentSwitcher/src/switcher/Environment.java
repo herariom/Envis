@@ -7,6 +7,8 @@ public class Environment {
     
     private String name;
     private ArrayList<App> apps;
+    private Enum<OperatingSystem> operatingSystem;
+    
     
     public Environment(String name) {
         this(name, null);
@@ -65,6 +67,14 @@ public class Environment {
 
     public void setApps(ArrayList<App> apps) {
         this.apps = apps;
+    }
+    
+    public Enum<OperatingSystem> getOperatingSystem() {
+        return operatingSystem;
+    }
+    
+    public void setOperatingSystem(Enum<OperatingSystem> operatingSystem) {
+        this.operatingSystem = operatingSystem;
     }
     
     @Override

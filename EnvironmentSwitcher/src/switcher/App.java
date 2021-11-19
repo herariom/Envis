@@ -3,11 +3,11 @@ package switcher;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class App {
-    private String filePath;
-    private String name;
-    private ArrayList<String> arguments;
-    private Process process;
+public abstract class App {
+    protected String filePath;
+    protected String name;
+    protected ArrayList<String> arguments;
+    protected Process process;
     
     public App(String filePath, String name) {
         this(filePath, name, null);
@@ -23,64 +23,20 @@ public class App {
         }
     }
     
-    public String getFilePath() {
-        return filePath;
-    }
+    public abstract String getFilePath();
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
+    public abstract void setFilePath(String filePath);
 
-    public String getName() {
-        return name;
-    }
+    public abstract String getName();
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public abstract void setName(String name);
 
-    public void setArguments(ArrayList<String> arguments) {
-        if (arguments == null) {
-            throw new IllegalArgumentException("Arguments cannot be null");
-        }
-        
-        this.arguments = arguments;
-    }
+    public abstract void setArguments(ArrayList<String> arguments);
+    public abstract ArrayList<String> getArguments();
     
-    public ArrayList<String> getArguments() {
-        return new ArrayList<>(arguments);
-    }
+    public abstract Process getProcess();
     
-    public Process getProcess() {
-        return process;
-    }
+    public abstract void start() throws IOException;
     
-    public void start() throws IOException {
-        ArrayList<String> command = new ArrayList<>();
-        
-        // The first entry in the list passed to ProcessBuilder is path to executable
-        command.add(filePath);
-        
-        command.addAll(arguments);
-        
-        Process process = new ProcessBuilder(command).start();
-        this.process = process;
-    }
-    
-    // Destroy process and return if it was successfully ended
-    public boolean end() {
-        if (process.isAlive()) {
-            process.destroy();
-            process.children().forEach(a -> a.destroy());
-        } else {
-            return true;
-        }
-        
-        return !process.isAlive();
-    }
-    
-    @Override
-    public String toString() {
-        return name + " - " + filePath;
-    }
+    public abstract boolean end();
 }

@@ -18,7 +18,7 @@ public class AppTest {
     
     @Test
     public void testAppStringString() {
-        App a = new App(FILE_PATH, NAME);
+        WindowsApp a = new WindowsApp(FILE_PATH, NAME);
         
         assertEquals(FILE_PATH, a.getFilePath());
         assertEquals(NAME, a.getName());
@@ -33,13 +33,13 @@ public class AppTest {
         arguments.add("arg 1");
         arguments.add("arg 2");
 
-        App a = new App(FILE_PATH, NAME, arguments);
+        WindowsApp a = new WindowsApp(FILE_PATH, NAME, arguments);
         
         assertEquals(FILE_PATH, a.getFilePath());
         assertEquals(NAME, a.getName());
         assertEquals(arguments, a.getArguments());
         
-        App a2 = new App(FILE_PATH, NAME, null);
+        WindowsApp a2 = new WindowsApp(FILE_PATH, NAME, null);
         
         assertEquals(FILE_PATH, a2.getFilePath());
         assertEquals(NAME, a2.getName());
@@ -48,14 +48,14 @@ public class AppTest {
 
     @Test
     public void testGetFilePath() {
-        App a = new App(FILE_PATH, NAME);
+        WindowsApp a = new WindowsApp(FILE_PATH, NAME);
         
         assertEquals(FILE_PATH, a.getFilePath());
     }
 
     @Test
     public void testSetFilePath() {
-        App a = new App(FILE_PATH, NAME);
+        WindowsApp a = new WindowsApp(FILE_PATH, NAME);
         
         assertEquals(FILE_PATH, a.getFilePath());
         
@@ -67,14 +67,14 @@ public class AppTest {
 
     @Test
     public void testGetName() {
-        App a = new App(FILE_PATH, NAME, arguments);
+        WindowsApp a = new WindowsApp(FILE_PATH, NAME, arguments);
         
         assertEquals(NAME, a.getName());
     }
 
     @Test
     public void testSetName() {
-        App a = new App(FILE_PATH, NAME, arguments);
+        WindowsApp a = new WindowsApp(FILE_PATH, NAME, arguments);
         
         assertEquals(NAME, a.getName());
         
@@ -90,7 +90,7 @@ public class AppTest {
         arguments.add("arg 1");
         arguments.add("arg 2");
 
-        App a = new App(FILE_PATH, NAME);
+        WindowsApp a = new WindowsApp(FILE_PATH, NAME);
         
         assertEquals(empty, a.getArguments());
         
@@ -106,7 +106,7 @@ public class AppTest {
         arguments.add("arg 1");
         arguments.add("arg 2");
 
-        App a = new App(FILE_PATH, NAME);
+        WindowsApp a = new WindowsApp(FILE_PATH, NAME);
         
         assertEquals(empty, a.getArguments());
         
@@ -117,7 +117,7 @@ public class AppTest {
 
     @Test
     public void testToString() {
-        App a = new App(FILE_PATH, NAME);
+        WindowsApp a = new WindowsApp(FILE_PATH, NAME);
         
         assertEquals(NAME + " - " + FILE_PATH, a.toString());
     }

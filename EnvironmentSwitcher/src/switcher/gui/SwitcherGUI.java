@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import switcher.WindowsApp;
 import switcher.App;
 import switcher.Environment;
 import switcher.EnvironmentManager;
@@ -230,7 +231,7 @@ public class SwitcherGUI {
                 Environment env = environments.get(envList.getSelectedIndex());
                 
                 if (env != null) {
-                    App app = new App(fieldFilePath.getText(), fieldName.getText());
+                    WindowsApp app = new WindowsApp(fieldFilePath.getText(), fieldName.getText());
                     
                     env.addApp(app);
                     

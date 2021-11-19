@@ -23,8 +23,8 @@ public class EnvironmentTest {
 
     @Test
     public void testEnvironmentStringArrayListOfApp() {
-        App a = new App("C:\\Program Files\\HeidiSQL\\heidisql.exe", "HeidiSQL");
-        App a2 = new App("C:\\Program Files\\Git\\git-bash.exe", "Git-Bash");
+        WindowsApp a = new WindowsApp("C:\\Program Files\\HeidiSQL\\heidisql.exe", "HeidiSQL");
+        WindowsApp a2 = new WindowsApp("C:\\Program Files\\Git\\git-bash.exe", "Git-Bash");
 
         apps = new ArrayList<>();
 
@@ -62,15 +62,15 @@ public class EnvironmentTest {
 
         assertEquals(0, env.getApps().size());
         
-        env.addApp(new App("C:\\Test.exe", "Test"));
+        env.addApp(new WindowsApp("C:\\Test.exe", "Test"));
         
         assertEquals(1, env.getApps().size());
     }
 
     @Test
     public void testGetApps() {
-        App a = new App("C:\\Program Files\\HeidiSQL\\heidisql.exe", "HeidiSQL");
-        App a2 = new App("C:\\Program Files\\Git\\git-bash.exe", "Git-Bash");
+        WindowsApp a = new WindowsApp("C:\\Program Files\\HeidiSQL\\heidisql.exe", "HeidiSQL");
+        WindowsApp a2 = new WindowsApp("C:\\Program Files\\Git\\git-bash.exe", "Git-Bash");
 
         apps = new ArrayList<>();
 
@@ -90,8 +90,8 @@ public class EnvironmentTest {
         
         assertEquals(empty, env.getApps());
         
-        App a = new App("C:\\Program Files\\HeidiSQL\\heidisql.exe", "HeidiSQL");
-        App a2 = new App("C:\\Program Files\\Git\\git-bash.exe", "Git-Bash");
+        WindowsApp a = new WindowsApp("C:\\Program Files\\HeidiSQL\\heidisql.exe", "HeidiSQL");
+        WindowsApp a2 = new WindowsApp("C:\\Program Files\\Git\\git-bash.exe", "Git-Bash");
 
         apps = new ArrayList<>();
 
