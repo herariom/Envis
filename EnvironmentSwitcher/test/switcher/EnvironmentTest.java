@@ -23,15 +23,15 @@ public class EnvironmentTest {
 
     @Test
     public void testEnvironmentStringArrayListOfApp() {
-        WindowsApp a = new WindowsApp("C:\\Program Files\\HeidiSQL\\heidisql.exe", "HeidiSQL");
-        WindowsApp a2 = new WindowsApp("C:\\Program Files\\Git\\git-bash.exe", "Git-Bash");
+        WindowsApp a = new WindowsApp("C:\\Test\\test1.exe", "Test App 1");
+        WindowsApp a2 = new WindowsApp("C:\\Test2\\test2.exe", "Test App 2");
 
         apps = new ArrayList<>();
 
         apps.add(a);
         apps.add(a2);
 
-        Environment env = new Environment(ENV_NAME, apps);
+        Environment env = new Environment(ENV_NAME, OperatingSystem.WINDOWS, apps);
 
         assertEquals(ENV_NAME, env.getName());
         assertEquals(apps, env.getApps());
@@ -77,7 +77,7 @@ public class EnvironmentTest {
         apps.add(a);
         apps.add(a2);
 
-        Environment env = new Environment(ENV_NAME, apps);
+        Environment env = new Environment(ENV_NAME, OperatingSystem.WINDOWS, apps);
 
         assertEquals(apps, env.getApps());
         

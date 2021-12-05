@@ -2,6 +2,7 @@ package switcher;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class WindowsApp extends App {
     
@@ -9,7 +10,7 @@ public class WindowsApp extends App {
         this(filePath, name, null);
     }
     
-    public WindowsApp(String filePath, String name, ArrayList<String> arguments) {
+    public WindowsApp(String filePath, String name, List<String> arguments) {
         super(filePath, name, arguments);
     }
     
@@ -29,7 +30,7 @@ public class WindowsApp extends App {
         this.name = name;
     }
 
-    public void setArguments(ArrayList<String> arguments) {
+    public void setArguments(List<String> arguments) {
         if (arguments == null) {
             throw new IllegalArgumentException("Arguments cannot be null");
         }
@@ -37,7 +38,7 @@ public class WindowsApp extends App {
         this.arguments = arguments;
     }
     
-    public ArrayList<String> getArguments() {
+    public List<String> getArguments() {
         return new ArrayList<>(arguments);
     }
     

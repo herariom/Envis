@@ -1,0 +1,9 @@
+{
+  "name": "Test Environment",
+  "operatingSystem": "WINDOWS",
+  "apps":[{
+    "filePath" : "C:\\Test\\test.exe",
+    "name" : "App",
+    "arguments":["args1", "args2"]
+    }]
+}

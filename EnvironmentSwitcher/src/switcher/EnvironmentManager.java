@@ -33,8 +33,8 @@ public class EnvironmentManager {
         environments.put(name, new Environment(name));
     }
     
-    public void addEnvironment(String name, ArrayList<App> apps) {
-        environments.put(name, new Environment(name, apps));
+    public void addEnvironment(String name, Enum<OperatingSystem> operatingSystem, ArrayList<App> apps) {
+        environments.put(name, new Environment(name, operatingSystem, apps));
     }
     
     public Environment removeEnvironment(String name) {

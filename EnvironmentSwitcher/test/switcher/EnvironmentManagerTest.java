@@ -48,7 +48,7 @@ public class EnvironmentManagerTest {
         
         assertEquals(0, n.getEnvironments().size());
         
-        n.addEnvironment("Test", null);
+        n.addEnvironment("Test", OperatingSystem.WINDOWS, null);
         
         assertEquals(1, n.getEnvironments().size());
         

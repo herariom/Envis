@@ -9,13 +9,17 @@ public class Environment {
     private ArrayList<App> apps;
     private Enum<OperatingSystem> operatingSystem;
     
-    
     public Environment(String name) {
-        this(name, null);
+        this(name, null, null);
     }
     
-    public Environment(String name, ArrayList<App> apps) {
+    public Environment(String name, Enum<OperatingSystem> operatingSystem) {
+        this(name, operatingSystem, null);
+    }
+    
+    public Environment(String name, Enum<OperatingSystem> operatingSystem, ArrayList<App> apps) {
         this.name = name;
+        this.operatingSystem = operatingSystem;
         if (apps == null) {
             this.apps = new ArrayList<>();
         } else {
