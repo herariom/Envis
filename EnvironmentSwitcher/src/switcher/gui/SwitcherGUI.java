@@ -1,30 +1,31 @@
 package switcher.gui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
-import switcher.WindowsApp;
-import switcher.App;
-import switcher.Environment;
-import switcher.EnvironmentManager;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import java.awt.Font;
-import javax.swing.Box;
-import java.awt.Component;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
+import switcher.App;
+import switcher.Environment;
+import switcher.EnvironmentManager;
+import switcher.Loader;
+import switcher.WindowsApp;
 
 public class SwitcherGUI {
 
@@ -39,6 +40,7 @@ public class SwitcherGUI {
     private JTextField fieldFilePath;
     private JTextField fieldName;
     private JTextField fieldEnvName;
+    private JTextField fieldJsonPath;
 
     /**
      * Launch the application.
@@ -70,7 +72,7 @@ public class SwitcherGUI {
     private void initialize() {
         frmEnvironmentSwitcher = new JFrame();
         frmEnvironmentSwitcher.setTitle("Environment Switcher");
-        frmEnvironmentSwitcher.setBounds(100, 100, 560, 344);
+        frmEnvironmentSwitcher.setBounds(100, 100, 560, 341);
         frmEnvironmentSwitcher.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frmEnvironmentSwitcher.getContentPane().setLayout(null);
 
@@ -155,8 +157,39 @@ public class SwitcherGUI {
         JButton btnRemoveEnv = new JButton("Remove Env");
         
         btnRemoveEnv.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        btnRemoveEnv.setBounds(10, 277, 151, 21);
+        btnRemoveEnv.setBounds(163, 245, 151, 21);
         frmEnvironmentSwitcher.getContentPane().add(btnRemoveEnv);
+        
+        JButton btnLoadJson = new JButton("Load JSON");
+        btnLoadJson.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    envMgr.addEnvironment(Loader.loadEnvironment(fieldJsonPath.getText()));
+
+                    environments.clear();
+                    environments.addAll(envMgr.getEnvironments().values());
+                } catch (JsonParseException e1) {
+                    e1.printStackTrace();
+                } catch (JsonMappingException e1) {
+                    e1.printStackTrace();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+        btnLoadJson.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        btnLoadJson.setBounds(191, 278, 102, 21);
+        frmEnvironmentSwitcher.getContentPane().add(btnLoadJson);
+        
+        JLabel lblJsonPath = new JLabel("JSON Path:");
+        lblJsonPath.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        lblJsonPath.setBounds(10, 280, 63, 13);
+        frmEnvironmentSwitcher.getContentPane().add(lblJsonPath);
+        
+        fieldJsonPath = new JTextField();
+        fieldJsonPath.setBounds(83, 278, 96, 19);
+        frmEnvironmentSwitcher.getContentPane().add(fieldJsonPath);
+        fieldJsonPath.setColumns(10);
 
         envList.addListSelectionListener(new ListSelectionListener() {
 

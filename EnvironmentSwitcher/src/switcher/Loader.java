@@ -1,6 +1,9 @@
 package switcher;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -10,9 +13,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Loader {
-    public static Environment loadEnvironment(String jsonPath) throws JsonParseException, JsonMappingException, IOException {
+    public static Environment loadEnvironment(String uri) throws JsonParseException, JsonMappingException, IOException {
+        String json = loadFileAsString(uri);
+        
         ObjectMapper mapper = new ObjectMapper();
-        JsonNode rootNode = mapper.readTree(jsonPath);
+        JsonNode rootNode = mapper.readTree(json);
         
         JsonNode appsNode = rootNode.path("apps");
         Iterator<JsonNode> iterator = appsNode.elements();
@@ -59,5 +64,9 @@ public class Loader {
         
         
         return env;
+    }
+    
+    public static String loadFileAsString(String uri) throws IOException {
+        return Files.readString(Paths.get(uri), StandardCharsets.US_ASCII);
     }
 }

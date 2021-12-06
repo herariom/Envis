@@ -37,6 +37,10 @@ public class EnvironmentManager {
         environments.put(name, new Environment(name, operatingSystem, apps));
     }
     
+    public void addEnvironment(Environment env) {
+        environments.put(env.getName(), env);
+    }
+    
     public Environment removeEnvironment(String name) {
         return environments.remove(name);
     }
