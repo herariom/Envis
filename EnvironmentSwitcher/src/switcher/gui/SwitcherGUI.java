@@ -41,6 +41,7 @@ public class SwitcherGUI {
     private JTextField fieldName;
     private JTextField fieldEnvName;
     private JTextField fieldJsonPath;
+    private JTextField fieldSavePath;
 
     /**
      * Launch the application.
@@ -72,7 +73,7 @@ public class SwitcherGUI {
     private void initialize() {
         frmEnvironmentSwitcher = new JFrame();
         frmEnvironmentSwitcher.setTitle("Environment Switcher");
-        frmEnvironmentSwitcher.setBounds(100, 100, 560, 341);
+        frmEnvironmentSwitcher.setBounds(100, 100, 560, 367);
         frmEnvironmentSwitcher.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frmEnvironmentSwitcher.getContentPane().setLayout(null);
 
@@ -190,6 +191,30 @@ public class SwitcherGUI {
         fieldJsonPath.setBounds(83, 278, 96, 19);
         frmEnvironmentSwitcher.getContentPane().add(fieldJsonPath);
         fieldJsonPath.setColumns(10);
+        
+        JLabel lblSavePath = new JLabel("Save path:");
+        lblSavePath.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        lblSavePath.setBounds(10, 307, 72, 13);
+        frmEnvironmentSwitcher.getContentPane().add(lblSavePath);
+        
+        fieldSavePath = new JTextField();
+        fieldSavePath.setBounds(83, 305, 96, 19);
+        frmEnvironmentSwitcher.getContentPane().add(fieldSavePath);
+        fieldSavePath.setColumns(10);
+        
+        JButton btnSave = new JButton("Save");
+        btnSave.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Environment env = environments.get(envList.getSelectedIndex());
+                
+                if (env != null) {
+                    Loader.saveEnvironment(env);
+                }
+            }
+        });
+        btnSave.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        btnSave.setBounds(191, 304, 102, 21);
+        frmEnvironmentSwitcher.getContentPane().add(btnSave);
 
         envList.addListSelectionListener(new ListSelectionListener() {
 

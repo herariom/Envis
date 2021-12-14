@@ -5,7 +5,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -64,6 +68,37 @@ public class Loader {
         
         
         return env;
+    }
+    
+    public static void saveEnvironment(Environment environment) {
+        try {
+            
+            Map<String, Object> jsonNodes = new HashMap<>();
+
+            jsonNodes.put("name", "Test Environment");
+            jsonNodes.put("operatingSystem", "WINDOWS");
+            
+            List<HashMap<String, Object>> appList = new ArrayList<HashMap<String, Object>>();
+
+            for (int i = 0; i < environment.getApps().size(); i++) {
+                HashMap<String, Object> app = new HashMap<>();
+                app.put("filePath", environment.getApps().get(i).getFilePath());
+                app.put("name", environment.getApps().get(i).getName());
+                app.put("arguments", environment.getApps().get(i).getArguments());
+                
+                appList.add(app);
+            }
+            
+            jsonNodes.put("apps", appList);
+            
+            ObjectMapper mapper = new ObjectMapper();
+
+            // convert map to JSON file
+            mapper.writeValue(Paths.get("res/" + UUID.randomUUID().toString().replace("-", "") + ".json").toFile(), jsonNodes);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
     
     public static String loadFileAsString(String uri) throws IOException {
