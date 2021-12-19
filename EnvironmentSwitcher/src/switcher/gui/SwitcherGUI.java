@@ -15,6 +15,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -26,6 +28,7 @@ import switcher.Environment;
 import switcher.EnvironmentManager;
 import switcher.Loader;
 import switcher.WindowsApp;
+import javax.swing.border.BevelBorder;
 
 public class SwitcherGUI {
 
@@ -71,13 +74,20 @@ public class SwitcherGUI {
      * Initialize the contents of the frame.
      */
     private void initialize() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
         frmEnvironmentSwitcher = new JFrame();
         frmEnvironmentSwitcher.setTitle("Environment Switcher");
-        frmEnvironmentSwitcher.setBounds(100, 100, 560, 367);
+        frmEnvironmentSwitcher.setBounds(100, 100, 690, 320);
         frmEnvironmentSwitcher.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frmEnvironmentSwitcher.getContentPane().setLayout(null);
 
         JList<Environment> envList = new JList<>(environments);
+        envList.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
         envList.setBounds(10, 30, 165, 186);
         frmEnvironmentSwitcher.getContentPane().add(envList);
 
@@ -87,78 +97,79 @@ public class SwitcherGUI {
         frmEnvironmentSwitcher.getContentPane().add(lblEnvironments);
 
         JList<App> appList = new JList<>(apps);
-        appList.setBounds(212, 30, 165, 186);
+        appList.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+        appList.setBounds(342, 30, 165, 186);
         frmEnvironmentSwitcher.getContentPane().add(appList);
 
         JLabel lblApps = new JLabel("Apps");
         lblApps.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        lblApps.setBounds(212, 7, 165, 13);
+        lblApps.setBounds(342, 7, 165, 13);
         frmEnvironmentSwitcher.getContentPane().add(lblApps);
 
         JButton btnStartApps = new JButton("Start Apps");
 
         btnStartApps.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        btnStartApps.setBounds(373, 245, 165, 21);
+        btnStartApps.setBounds(326, 251, 165, 21);
         frmEnvironmentSwitcher.getContentPane().add(btnStartApps);
 
         JButton btnEndApps = new JButton("End Apps");
 
         btnEndApps.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        btnEndApps.setBounds(373, 276, 165, 21);
+        btnEndApps.setBounds(501, 251, 165, 21);
         frmEnvironmentSwitcher.getContentPane().add(btnEndApps);
 
         JLabel lblName = new JLabel("Name:");
         lblName.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        lblName.setBounds(387, 31, 45, 13);
+        lblName.setBounds(517, 31, 45, 13);
         frmEnvironmentSwitcher.getContentPane().add(lblName);
 
         fieldFilePath = new JTextField();
-        fieldFilePath.setBounds(442, 52, 96, 19);
+        fieldFilePath.setBounds(572, 52, 96, 19);
         frmEnvironmentSwitcher.getContentPane().add(fieldFilePath);
         fieldFilePath.setColumns(10);
 
         JLabel lblFilepath = new JLabel("Filepath:");
         lblFilepath.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        lblFilepath.setBounds(387, 54, 45, 13);
+        lblFilepath.setBounds(517, 54, 45, 13);
         frmEnvironmentSwitcher.getContentPane().add(lblFilepath);
 
         fieldName = new JTextField();
-        fieldName.setBounds(442, 28, 96, 19);
+        fieldName.setBounds(572, 28, 96, 19);
         frmEnvironmentSwitcher.getContentPane().add(fieldName);
         fieldName.setColumns(10);
 
         JButton btnAddApp = new JButton("Add App");
 
         btnAddApp.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        btnAddApp.setBounds(387, 81, 151, 21);
+        btnAddApp.setBounds(517, 81, 151, 21);
         frmEnvironmentSwitcher.getContentPane().add(btnAddApp);
 
         JButton btnRemoveApp = new JButton("Remove App");
 
         btnRemoveApp.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        btnRemoveApp.setBounds(387, 112, 151, 21);
+        btnRemoveApp.setBounds(517, 112, 151, 21);
         frmEnvironmentSwitcher.getContentPane().add(btnRemoveApp);
         
         fieldEnvName = new JTextField();
-        fieldEnvName.setBounds(65, 224, 96, 19);
+        fieldEnvName.setBounds(240, 30, 96, 19);
         frmEnvironmentSwitcher.getContentPane().add(fieldEnvName);
         fieldEnvName.setColumns(10);
         
         JLabel lblName_1 = new JLabel("Name:");
         lblName_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        lblName_1.setBounds(10, 226, 45, 13);
+        lblName_1.setBounds(185, 32, 45, 13);
         frmEnvironmentSwitcher.getContentPane().add(lblName_1);
         
         JButton btnAddEnv = new JButton("Add Env");
 
         btnAddEnv.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        btnAddEnv.setBounds(10, 246, 151, 21);
+        btnAddEnv.setBounds(185, 61, 151, 21);
         frmEnvironmentSwitcher.getContentPane().add(btnAddEnv);
         
         JButton btnRemoveEnv = new JButton("Remove Env");
         
         btnRemoveEnv.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        btnRemoveEnv.setBounds(163, 245, 151, 21);
+        btnRemoveEnv.setBounds(185, 92, 151, 21);
         frmEnvironmentSwitcher.getContentPane().add(btnRemoveEnv);
         
         JButton btnLoadJson = new JButton("Load JSON");
@@ -179,26 +190,26 @@ public class SwitcherGUI {
             }
         });
         btnLoadJson.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        btnLoadJson.setBounds(191, 278, 102, 21);
+        btnLoadJson.setBounds(191, 226, 102, 21);
         frmEnvironmentSwitcher.getContentPane().add(btnLoadJson);
         
         JLabel lblJsonPath = new JLabel("JSON Path:");
         lblJsonPath.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        lblJsonPath.setBounds(10, 280, 63, 13);
+        lblJsonPath.setBounds(10, 228, 63, 13);
         frmEnvironmentSwitcher.getContentPane().add(lblJsonPath);
         
         fieldJsonPath = new JTextField();
-        fieldJsonPath.setBounds(83, 278, 96, 19);
+        fieldJsonPath.setBounds(83, 226, 96, 19);
         frmEnvironmentSwitcher.getContentPane().add(fieldJsonPath);
         fieldJsonPath.setColumns(10);
         
         JLabel lblSavePath = new JLabel("Save path:");
         lblSavePath.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        lblSavePath.setBounds(10, 307, 72, 13);
+        lblSavePath.setBounds(10, 255, 72, 13);
         frmEnvironmentSwitcher.getContentPane().add(lblSavePath);
         
         fieldSavePath = new JTextField();
-        fieldSavePath.setBounds(83, 305, 96, 19);
+        fieldSavePath.setBounds(83, 253, 96, 19);
         frmEnvironmentSwitcher.getContentPane().add(fieldSavePath);
         fieldSavePath.setColumns(10);
         
@@ -213,7 +224,7 @@ public class SwitcherGUI {
             }
         });
         btnSave.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        btnSave.setBounds(191, 304, 102, 21);
+        btnSave.setBounds(191, 252, 102, 21);
         frmEnvironmentSwitcher.getContentPane().add(btnSave);
 
         envList.addListSelectionListener(new ListSelectionListener() {
