@@ -5,20 +5,19 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.BevelBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -28,7 +27,6 @@ import switcher.Environment;
 import switcher.EnvironmentManager;
 import switcher.Loader;
 import switcher.WindowsApp;
-import javax.swing.border.BevelBorder;
 
 public class SwitcherGUI {
 
@@ -36,6 +34,7 @@ public class SwitcherGUI {
     private JTextField envName;
     private DefaultListModel<Environment> environments = new DefaultListModel<>();
     private DefaultListModel<App> apps = new DefaultListModel<>();
+    private DefaultListModel<String> args = new DefaultListModel<>();
 
     private EnvironmentManager envMgr;
     private JTextField appFilepath;
@@ -45,6 +44,7 @@ public class SwitcherGUI {
     private JTextField fieldEnvName;
     private JTextField fieldJsonPath;
     private JTextField fieldSavePath;
+    private JTextField fieldArg;
 
     /**
      * Launch the application.
@@ -82,7 +82,7 @@ public class SwitcherGUI {
         
         frmEnvironmentSwitcher = new JFrame();
         frmEnvironmentSwitcher.setTitle("Environment Switcher");
-        frmEnvironmentSwitcher.setBounds(100, 100, 690, 320);
+        frmEnvironmentSwitcher.setBounds(100, 100, 1008, 320);
         frmEnvironmentSwitcher.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frmEnvironmentSwitcher.getContentPane().setLayout(null);
 
@@ -98,7 +98,7 @@ public class SwitcherGUI {
 
         JList<App> appList = new JList<>(apps);
         appList.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-        appList.setBounds(342, 30, 165, 186);
+        appList.setBounds(352, 30, 165, 186);
         frmEnvironmentSwitcher.getContentPane().add(appList);
 
         JLabel lblApps = new JLabel("Apps");
@@ -109,13 +109,13 @@ public class SwitcherGUI {
         JButton btnStartApps = new JButton("Start Apps");
 
         btnStartApps.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        btnStartApps.setBounds(326, 251, 165, 21);
+        btnStartApps.setBounds(641, 251, 165, 21);
         frmEnvironmentSwitcher.getContentPane().add(btnStartApps);
 
         JButton btnEndApps = new JButton("End Apps");
 
         btnEndApps.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        btnEndApps.setBounds(501, 251, 165, 21);
+        btnEndApps.setBounds(816, 251, 165, 21);
         frmEnvironmentSwitcher.getContentPane().add(btnEndApps);
 
         JLabel lblName = new JLabel("Name:");
@@ -141,13 +141,13 @@ public class SwitcherGUI {
         JButton btnAddApp = new JButton("Add App");
 
         btnAddApp.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        btnAddApp.setBounds(517, 81, 151, 21);
+        btnAddApp.setBounds(517, 115, 151, 21);
         frmEnvironmentSwitcher.getContentPane().add(btnAddApp);
 
         JButton btnRemoveApp = new JButton("Remove App");
 
         btnRemoveApp.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        btnRemoveApp.setBounds(517, 112, 151, 21);
+        btnRemoveApp.setBounds(517, 146, 151, 21);
         frmEnvironmentSwitcher.getContentPane().add(btnRemoveApp);
         
         fieldEnvName = new JTextField();
@@ -190,16 +190,16 @@ public class SwitcherGUI {
             }
         });
         btnLoadJson.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        btnLoadJson.setBounds(191, 226, 102, 21);
+        btnLoadJson.setBounds(482, 252, 102, 21);
         frmEnvironmentSwitcher.getContentPane().add(btnLoadJson);
         
         JLabel lblJsonPath = new JLabel("JSON Path:");
         lblJsonPath.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        lblJsonPath.setBounds(10, 228, 63, 13);
+        lblJsonPath.setBounds(303, 255, 63, 13);
         frmEnvironmentSwitcher.getContentPane().add(lblJsonPath);
         
         fieldJsonPath = new JTextField();
-        fieldJsonPath.setBounds(83, 226, 96, 19);
+        fieldJsonPath.setBounds(376, 253, 96, 19);
         frmEnvironmentSwitcher.getContentPane().add(fieldJsonPath);
         fieldJsonPath.setColumns(10);
         
@@ -226,6 +226,96 @@ public class SwitcherGUI {
         btnSave.setFont(new Font("Tahoma", Font.PLAIN, 12));
         btnSave.setBounds(191, 252, 102, 21);
         frmEnvironmentSwitcher.getContentPane().add(btnSave);
+        
+        JButton btnChooseFile = new JButton("Choose file");
+        btnChooseFile.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser chooser = new JFileChooser();
+                FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                    "Executables", "exe");
+                chooser.setFileFilter(filter);
+                int returnVal = chooser.showOpenDialog(frmEnvironmentSwitcher);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                   fieldFilePath.setText(chooser.getSelectedFile().getAbsolutePath());
+                }
+            }
+        });
+        btnChooseFile.setBounds(517, 81, 149, 21);
+        frmEnvironmentSwitcher.getContentPane().add(btnChooseFile);
+        
+        JList<String> argList = new JList<>(args);
+        argList.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+        argList.setBounds(679, 30, 165, 186);
+        
+        appList.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent arg0) {
+                if (!arg0.getValueIsAdjusting() && envList.getSelectedIndex() >= 0) {
+                    System.out.println(envList.getSelectedIndex());
+                    App app = apps.get(appList.getSelectedIndex());
+                    
+                    if (app != null) {
+                        args.clear();
+                        args.addAll(app.getArguments());
+                    }
+                }
+            }
+        });
+        
+        frmEnvironmentSwitcher.getContentPane().add(argList);
+        
+        JButton btnAddArg = new JButton("Add Arg");
+        btnAddArg.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Environment env = environments.get(envList.getSelectedIndex());
+                
+                if (env != null) {
+                    App app = apps.get(appList.getSelectedIndex());
+                    app.addArgument(fieldArg.getText());
+                    
+                    System.out.println(app.getArguments());
+                    
+                    args.clear();
+                    args.addAll(app.getArguments());
+                }
+            }
+        });
+        btnAddArg.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        btnAddArg.setBounds(854, 61, 127, 21);
+        frmEnvironmentSwitcher.getContentPane().add(btnAddArg);
+        
+        JButton btnRemoveArg = new JButton("Remove Arg");
+        btnRemoveArg.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Environment env = environments.get(envList.getSelectedIndex());
+                    
+                    if (env != null) {
+                        App app = apps.get(appList.getSelectedIndex());
+                        app.removeArgument(argList.getSelectedIndex());
+                        
+                        args.clear();
+                        args.addAll(app.getArguments());
+                    }
+                } catch (ArrayIndexOutOfBoundsException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        });
+        btnRemoveArg.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        btnRemoveArg.setBounds(854, 92, 127, 21);
+        frmEnvironmentSwitcher.getContentPane().add(btnRemoveArg);
+        
+        fieldArg = new JTextField();
+        fieldArg.setBounds(885, 30, 96, 19);
+        frmEnvironmentSwitcher.getContentPane().add(fieldArg);
+        fieldArg.setColumns(10);
+        
+        JLabel lblArg = new JLabel("Arg:");
+        lblArg.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        lblArg.setBounds(854, 32, 57, 13);
+        frmEnvironmentSwitcher.getContentPane().add(lblArg);
 
         envList.addListSelectionListener(new ListSelectionListener() {
 

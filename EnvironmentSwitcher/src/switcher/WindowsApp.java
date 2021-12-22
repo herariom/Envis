@@ -42,6 +42,18 @@ public class WindowsApp extends App {
         return new ArrayList<>(arguments);
     }
     
+    public void addArgument(String argument) {
+        if (argument == null) {
+            throw new IllegalArgumentException("Argument cannot be null");
+        }
+        
+        arguments.add(argument);
+    }
+    
+    public String removeArgument(int idx) {
+        return arguments.remove(idx);
+    }
+    
     public Process getProcess() {
         return process;
     }
@@ -53,7 +65,13 @@ public class WindowsApp extends App {
         command.add(filePath);
         
         if (arguments != null) {
-            command.addAll(arguments);
+            // Tokenize arguments by spaces because spaces are not parsed by ProcessBuilder in a correct manner
+            arguments.forEach(arg -> {
+                String[] splitArg = arg.split(" ");
+                for (int i = 0; i < splitArg.length; i++) {
+                    command.add(splitArg[i]);
+                }
+            });
         }
         
         Process process = new ProcessBuilder(command).start();

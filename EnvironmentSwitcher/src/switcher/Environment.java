@@ -8,6 +8,7 @@ public class Environment {
     private String name;
     private ArrayList<App> apps;
     private Enum<OperatingSystem> operatingSystem;
+    private boolean running = false;
     
     public Environment(String name) {
         this(name, null, null);
@@ -31,6 +32,7 @@ public class Environment {
         for (App a : apps) {
             a.start();
         }
+        running = true;
     }
     
     // Returns apps that failed to close
@@ -43,15 +45,13 @@ public class Environment {
             }
         }
         
+        running = false;
         return notClosed;
-        
     }
-    
 
     public String getName() {
         return name;
     }
-
 
     public void setName(String name) {
         this.name = name;
@@ -80,7 +80,15 @@ public class Environment {
     public void setOperatingSystem(Enum<OperatingSystem> operatingSystem) {
         this.operatingSystem = operatingSystem;
     }
-    
+
+    public void setRunning(boolean running) {
+        this.running = running;
+    }
+
+    public boolean isRunning() {
+        return running;
+    }
+
     @Override
     public String toString() {
         return name;

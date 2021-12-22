@@ -36,6 +36,10 @@ public abstract class App {
 
     public abstract List<String> getArguments();
 
+    public abstract void addArgument(String argument);
+    
+    public abstract String removeArgument(int idx);
+    
     public abstract Process getProcess();
 
     public abstract void start() throws IOException;
